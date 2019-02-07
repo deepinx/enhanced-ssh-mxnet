@@ -11,5 +11,3 @@ Widerface result, by pyramid testing.
 
 Pretrain model on [baiducloud](https://pan.baidu.com/s/1A6QrZpxtGelcA3SHMpTlWQ) 
 
-
-
