@@ -1,6 +1,6 @@
-modified SSH, single stage face detector 
+Modified SSH, single stage face detector 
 
-added landmark detector using ONet of MTCNN 
+Added landmark detection using ONet of MTCNN 
 
 Widerface result, by pyramid testing.
 
