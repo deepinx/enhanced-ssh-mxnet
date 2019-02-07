@@ -13,7 +13,7 @@ detector = SSHDetector('./model/sshb', 0)
 alignment = MtcnnDetector(model_folder='./model', accurate_landmark=True)
 
 
-f = '../insightface/sample-images/t1.jpg'
+f = '../insightface/sample-images/t3.jpg'
 if len(sys.argv)>1:
   f = sys.argv[1]
 img = cv2.imread(f)
