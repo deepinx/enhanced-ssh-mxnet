@@ -1,6 +1,6 @@
-## Enhanced SSH, single stage face detector
+## Enhanced SSH with landmark localization
 
-Add landmark localization using ONet of MTCNN 
+Add landmark localization using ONet of MTCNN to original SSH method
 
 Widerface result, by pyramid testing.
 
@@ -21,7 +21,7 @@ You can use `python test.py` to test this alignment method.
 -   Ubuntu 18.04
 -   Mxnet-cu90 (=1.3.0)
 
-## Test Result
+## Alignment Result
 ![detection result](https://raw.githubusercontent.com/deepinx/SSH_alignment/master/sample-images/detection_result.png)
 
 ## Contact
