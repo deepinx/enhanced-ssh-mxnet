@@ -1,4 +1,4 @@
-**Enhanced SSH, single stage face detector**
+## Enhanced SSH, single stage face detector
 
 Add landmark localization using ONet of MTCNN 
 
@@ -12,3 +12,7 @@ Widerface result, by pyramid testing.
 Pretrain models on [baiducloud](https://pan.baidu.com/s/1A6QrZpxtGelcA3SHMpTlWQ) 
 
 Download the pretrain models and place it in *`./model/`*
+
+## Contact
+
+    xcliu1893[at]gmail.com
