@@ -9,9 +9,11 @@ Widerface result, by pyramid testing.
 | Original Caffe SSH | 0.93123  | 0.92106    | 0.84582  |
 | Our Model          | 0.93394  | 0.92187    | 0.83682  |
 
-Pretrain models on [baiducloud](https://pan.baidu.com/s/1sghM7w1nN3j8-UHfBHo6rA) 
+Pre-trained models on [baiducloud](https://pan.baidu.com/s/1sghM7w1nN3j8-UHfBHo6rA) 
 
-Download the pretrain models and place it in *`./model/`*
+Download the pre-trained models and place it in *`./model/`*
+
+You can use `python test.py` to test this alignment method.
 
 ## Test Environment
 
