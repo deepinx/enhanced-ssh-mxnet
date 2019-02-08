@@ -21,6 +21,9 @@ You can use `python test.py` to test this alignment method.
 -   Ubuntu 18.04
 -   Mxnet-cu90 (=1.3.0)
 
+## Test Result
+![detection result](https://raw.githubusercontent.com/deepinx/SSH_alignment/master/sample-images/detection_result.png)
+
 ## Contact
 
     xcliu1893[at]gmail.com
