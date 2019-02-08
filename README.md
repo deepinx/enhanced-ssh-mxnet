@@ -1,4 +1,4 @@
-Modified SSH, single stage face detector 
+Enhanced SSH, single stage face detector 
 
 Added landmark localization using ONet of MTCNN 
 
