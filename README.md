@@ -1,9 +1,11 @@
 
-## The MXNet Improved SSH with Landmark Localization
+## The MXNet Enhanced SSH (ESSH) with Face Landmark Localization
 
-Landmark localization using ONet in MTCNN is added to original SSH method.
+The localization of five semantic facial landmarks is added to original SSH method.
 
-Widerface result, by pyramid testing.
+You can use this ESSH method to face detection and coarse face alignment.
+
+Widerface detection result, by pyramid testing.
 
 | Impelmentation     | Easy-Set | Medium-Set | Hard-Set |
 | ------------------ | -------- | ---------- | -------- |
@@ -22,15 +24,21 @@ Pre-trained models can be downloaded on [baiducloud](https://pan.baidu.com/s/1sg
 
 1.  Prepare the environment.
 
-2.  Clone the repository.
+2.  Clone the repository.  
     
-3.  Download the pre-trained models and place it in *`./model/`*
-    
-4.  Type  `make`  to build necessary cxx libs.
+3.  Type  `make`  to build necessary cxx libs.
 
 ## Testing
 
-  You can use `python test.py` to test this alignment method.
+  -  Download the pre-trained model and place it in *`./model/`*
+
+  -  You can use `python test.py` to test the pre-trained models.
+
+## Training
+
+  You can use `python train.py` to train your own models.
+
+  Training datasets will come soon.
 
 
 ## Alignment Result
@@ -49,15 +57,5 @@ MIT LICENSE
   author={Najibi, Mahyar and Samangouei, Pouya and Chellappa, Rama and Davis, Larry S.},
   booktitle={IEEE International Conference on Computer Vision},
   year={2017},
-}
-
-@article{Zhang2016Joint,
-  title={Joint Face Detection and Alignment Using Multitask Cascaded Convolutional Networks},
-  author={Zhang, Kaipeng and Zhang, Zhanpeng and Li, Zhifeng and Yu, Qiao},
-  journal={IEEE Signal Processing Letters},
-  volume={23},
-  number={10},
-  pages={1499-1503},
-  year={2016},
 }
 ```

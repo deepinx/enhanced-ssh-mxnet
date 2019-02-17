@@ -3,17 +3,15 @@ import sys
 import numpy as np
 import datetime
 #sys.path.append('.')
-from ssh_detector import SSHDetector
-from mtcnn_detector import MtcnnDetector
+from essh_detector import ESSHDetector
 
 scales = [1200, 1600]
 #scales = [600, 1200]
-t = 2
-detector = SSHDetector('./model/sshb', 0)
-alignment = MtcnnDetector(model_folder='./model', accurate_landmark=True)
+t = 10
+detector = ESSHDetector('./model/essh', 0)
 
 
-f = './sample-images/t2.jpg'
+f = './sample-images/t1.jpg'
 if len(sys.argv)>1:
   f = sys.argv[1]
 img = cv2.imread(f)
@@ -31,17 +29,17 @@ if im_size_min>target_size or im_size_max>max_size:
   img = cv2.resize(img, None, None, fx=im_scale, fy=im_scale)
   print('resize to', img.shape)
 
-# for i in xrange(t-1): #warmup
-#   faces = detector.detect(img)
-# timea = datetime.datetime.now()
+for i in xrange(t-1): #warmup
+  faces = detector.detect(img)
+timea = datetime.datetime.now()
 
 faces = detector.detect(img, threshold=0.5)
 bbox = np.round(faces[:,0:5])
-landmark = alignment.get_landmark(img, bbox)
+landmark = faces[:, 5:15].reshape(-1,5,2)
 
-# timeb = datetime.datetime.now()
-# diff = timeb - timea
-# print('detection uses', diff.total_seconds(), 'seconds')
+timeb = datetime.datetime.now()
+diff = timeb - timea
+print('detection uses', diff.total_seconds(), 'seconds')
 print('find', faces.shape[0], 'faces')
 print(bbox)
 print(landmark)
@@ -55,6 +53,6 @@ for b in bbox:
   cv2.rectangle(img, (int(b[0]), int(b[1])), (int(b[2]), int(b[3])), (0, 255, 0), 2)
 for p in landmark:
   for i in range(5):
-    cv2.circle(img, (p[i], p[i + 5]), 1, (0, 0, 255), 2)
+    cv2.circle(img, (p[i][0], p[i][1]), 1, (0, 0, 255), 2)
 cv2.imshow("detection result", img)
 cv2.waitKey(0)
