@@ -135,7 +135,7 @@ def nonlinear_pred(boxes, box_deltas):
 
     return pred_boxes
 
-def kpoint_pred(boxes, point_deltas):
+def landmark_pred(boxes, point_deltas):
     """
     Transform the set of class-agnostic boxes into class-specific boxes
     by applying the predicted offsets (box_deltas)

@@ -7,7 +7,7 @@ import numpy as np
 import numpy.random as npr
 from distutils.util import strtobool
 
-from rcnn.processing.bbox_transform import nonlinear_pred, clip_boxes, kpoint_pred, clip_points
+from rcnn.processing.bbox_transform import nonlinear_pred, clip_boxes, landmark_pred, clip_points
 from rcnn.processing.generate_anchor import generate_anchors_fpn, anchors_plane
 from rcnn.processing.nms import gpu_nms_wrapper
 
@@ -56,7 +56,7 @@ class ESSHDetector:
 
   def detect(self, img, threshold=0.5, scales=[1.0]):
     proposals_list = []
-    proposals_kp_list = []
+    landmarks_list = []
     scores_list = []
 
     for im_scale in scales:
@@ -133,9 +133,9 @@ class ESSHDetector:
 
           proposals = clip_boxes(proposals, im_info[:2])
 
-          proposals_kp = kpoint_pred(anchors, kpoint_deltas)
+          landmarks = landmark_pred(anchors, kpoint_deltas)
 
-          proposals_kp = clip_points(proposals_kp, im_info[:2])
+          landmarks = clip_points(landmarks, im_info[:2])
 
           # keep = self._filter_boxes(proposals, min_size_dict['stride%s'%s] * im_info[2])
           # proposals = proposals[keep, :]
@@ -147,18 +147,18 @@ class ESSHDetector:
           if pre_nms_topN > 0:
               order = order[:pre_nms_topN]
           proposals = proposals[order, :]
-          proposals_kp = proposals_kp[order, :]
+          landmarks = landmarks[order, :]
           scores = scores[order]
 
           proposals /= im_scale
-          proposals_kp /= im_scale
+          landmarks /= im_scale
 
           proposals_list.append(proposals)
-          proposals_kp_list.append(proposals_kp)
+          landmarks_list.append(landmarks)
           scores_list.append(scores)
 
     proposals = np.vstack(proposals_list)
-    proposals_kp = np.vstack(proposals_kp_list)
+    landmarks = np.vstack(landmarks_list)
     scores = np.vstack(scores_list)
     scores_ravel = scores.ravel()
     order = scores_ravel.argsort()[::-1]
@@ -168,10 +168,10 @@ class ESSHDetector:
     #if pre_nms_topN > 0:
     #    order = order[:pre_nms_topN]
     proposals = proposals[order, :]
-    proposals_kp = proposals_kp[order, :]
+    landmarks = landmarks[order, :]
     scores = scores[order]
 
-    det = np.hstack((proposals, scores, proposals_kp)).astype(np.float32)
+    det = np.hstack((proposals, scores, landmarks)).astype(np.float32)
 
     #if np.shape(det)[0] == 0:
     #    print("Something wrong with the input image(resolution is too low?), generate fake proposals for it.")
