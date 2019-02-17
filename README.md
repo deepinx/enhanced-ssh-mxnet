@@ -3,7 +3,7 @@
 
 The localization of five semantic facial landmarks is added to original SSH method.
 
-You can use this ESSH method to face detection and coarse face alignment.
+You can use this ESSH method for face detection and coarse face alignment.
 
 Widerface detection result, by pyramid testing.
 
@@ -37,7 +37,9 @@ Pre-trained models can be downloaded on [baiducloud](https://pan.baidu.com/s/1sg
 ## Training
 
   You can use `python train.py` to train your own models.
-
+  
+  Training datasets will come soon.
+ 
 
 ## Alignment Result
 ![Alignment Result](https://raw.githubusercontent.com/deepinx/SSH_alignment/master/sample-images/detection_result.png)
