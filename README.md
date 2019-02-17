@@ -1,5 +1,5 @@
 
-## The MXNet Enhanced SSH (ESSH) with Facial Landmark Localization
+## The MXNet Enhanced SSH (ESSH) Face Detection and Alignment
 
 The localization of five semantic facial landmarks is added to original SSH method.
 
