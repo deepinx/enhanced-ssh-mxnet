@@ -1,5 +1,5 @@
 
-## The MXNet Enhanced SSH (ESSH) with Face Landmark Localization
+## The MXNet Enhanced SSH (ESSH) with Facial Landmark Localization
 
 The localization of five semantic facial landmarks is added to original SSH method.
 
@@ -24,7 +24,7 @@ Pre-trained models can be downloaded on [baiducloud](https://pan.baidu.com/s/1sg
 
 1.  Prepare the environment.
 
-2.  Clone the repository.  
+2.  Clone the repository.
     
 3.  Type  `make`  to build necessary cxx libs.
 
@@ -37,8 +37,6 @@ Pre-trained models can be downloaded on [baiducloud](https://pan.baidu.com/s/1sg
 ## Training
 
   You can use `python train.py` to train your own models.
-
-  Training datasets will come soon.
 
 
 ## Alignment Result
