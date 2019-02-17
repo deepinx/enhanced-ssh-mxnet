@@ -1,5 +1,5 @@
 
-## Enhanced SSH with landmark localization
+## The MXNet Improved SSH with Landmark Localization
 
 Landmark localization using ONet in MTCNN is added to original SSH method.
 
@@ -34,7 +34,7 @@ Pre-trained models can be downloaded on [baiducloud](https://pan.baidu.com/s/1sg
 
 
 ## Alignment Result
-![alignment result](https://raw.githubusercontent.com/deepinx/SSH_alignment/master/sample-images/detection_result.png)
+![Alignment Result](https://raw.githubusercontent.com/deepinx/SSH_alignment/master/sample-images/detection_result.png)
 
 ## License
 
