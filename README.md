@@ -12,7 +12,7 @@ Widerface detection result, by pyramid testing.
 | Original Caffe SSH | 0.93123  | 0.92106    | 0.84582  |
 | Our Model          | 0.93394  | 0.92187    | 0.83682  |
 
-Pre-trained models can be downloaded on [baiducloud](https://pan.baidu.com/s/1sghM7w1nN3j8-UHfBHo6rA) .
+Pre-trained models can be downloaded on [baiducloud](https://pan.baidu.com/s/1sghM7w1nN3j8-UHfBHo6rA) or [googledrive](https://drive.google.com/open?id=1eX_i0iZxZTMyJ4QccYd2F4x60GbZqQQJ).
 
 ## Environment
 
