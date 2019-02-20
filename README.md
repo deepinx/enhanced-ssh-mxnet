@@ -16,9 +16,11 @@ Pre-trained models can be downloaded on [baiducloud](https://pan.baidu.com/s/1sg
 
 ## Environment
 
+This repository has been tested under the following environment:
+
 -   Python 2.7 
 -   Ubuntu 18.04
--   Mxnet-cu90 (=1.3.0)
+-   Mxnet-cu90 (==1.3.0)
 
 ## Installation
 
