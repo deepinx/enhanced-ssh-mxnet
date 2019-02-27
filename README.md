@@ -39,9 +39,7 @@ This repository has been tested under the following environment:
 ## Training
 
   You can use `python train.py` to train your own models.
-  
-  Training datasets will come soon.
- 
+   
 
 ## Alignment Result
 ![Alignment Result](https://raw.githubusercontent.com/deepinx/SSH_alignment/master/sample-images/detection_result.png)
