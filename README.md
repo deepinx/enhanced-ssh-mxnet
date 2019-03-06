@@ -3,14 +3,8 @@
 
 The localization of five semantic facial landmarks is added to original SSH method.
 
-You can use this ESSH method for face detection and coarse face alignment.
+You can use this ESSH method for face detection and 2d-5p face alignment.
 
-Widerface detection result, by pyramid testing.
-
-| Impelmentation     | Easy-Set | Medium-Set | Hard-Set |
-| ------------------ | -------- | ---------- | -------- |
-| Original Caffe SSH | 0.93123  | 0.92106    | 0.84582  |
-| Our Model          | 0.93394  | 0.92187    | 0.83682  |
 
 Pre-trained models can be downloaded on [baiducloud](https://pan.baidu.com/s/1sghM7w1nN3j8-UHfBHo6rA) or [googledrive](https://drive.google.com/open?id=1eX_i0iZxZTMyJ4QccYd2F4x60GbZqQQJ).
 
