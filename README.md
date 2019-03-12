@@ -6,7 +6,7 @@ The localization of five semantic facial landmarks is added to original SSH meth
 You can use this ESSH method for face detection and 2d-5p face alignment.
 
 
-Pre-trained models can be downloaded on [baiducloud](https://pan.baidu.com/s/1sghM7w1nN3j8-UHfBHo6rA) or [googledrive](https://drive.google.com/open?id=1eX_i0iZxZTMyJ4QccYd2F4x60GbZqQQJ).
+Pre-trained models can be downloaded on [BaiduCloud](https://pan.baidu.com/s/1sghM7w1nN3j8-UHfBHo6rA) or [GoogleDrive](https://drive.google.com/open?id=1eX_i0iZxZTMyJ4QccYd2F4x60GbZqQQJ).
 
 ## Environment
 
