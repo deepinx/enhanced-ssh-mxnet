@@ -41,9 +41,8 @@ timeb = datetime.datetime.now()
 diff = timeb - timea
 print('detection uses', diff.total_seconds(), 'seconds')
 print('find', faces.shape[0], 'faces')
-print(bbox)
-print(landmark)
-
+# print(bbox)
+# print(landmark)
 # for i in xrange(faces.shape[0]):
 #   cv2.rectangle(img, (faces[i,0],faces[i,1]), (faces[i,2],faces[i,3]), (0,255,0), 2)
 # cv2.imshow('faces', img)
