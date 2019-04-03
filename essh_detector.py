@@ -9,7 +9,7 @@ from distutils.util import strtobool
 
 from rcnn.processing.bbox_transform import nonlinear_pred, clip_boxes, landmark_pred, clip_points
 from rcnn.processing.generate_anchor import generate_anchors_fpn, anchors_plane
-from rcnn.processing.nms import gpu_nms_wrapper
+from rcnn.processing.nms import gpu_nms_wrapper, py_nms_wrapper
 
 
 class ESSHDetector:
@@ -36,7 +36,8 @@ class ESSHDetector:
     self.nms_threshold = 0.3
     self._bbox_pred = nonlinear_pred
     sym, arg_params, aux_params = mx.model.load_checkpoint(prefix, epoch)
-    self.nms = gpu_nms_wrapper(self.nms_threshold, self.ctx_id)
+    # self.nms = gpu_nms_wrapper(self.nms_threshold, self.ctx_id)
+    self.nms = py_nms_wrapper(self.nms_threshold)
     self.pixel_means = np.array([103.939, 116.779, 123.68]) #BGR
 
     if not test_mode:
