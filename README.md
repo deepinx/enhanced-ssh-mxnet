@@ -3,8 +3,7 @@
 
 The localization of five semantic facial landmarks is added to original SSH method.
 
-You can use this ESSH method for face detection and 2d-5p face alignment.
-
+You can use this ESSH method for face detection and 2D-5P face alignment.
 
 Pre-trained models can be downloaded on [BaiduCloud](https://pan.baidu.com/s/1sghM7w1nN3j8-UHfBHo6rA) or [GoogleDrive](https://drive.google.com/open?id=1eX_i0iZxZTMyJ4QccYd2F4x60GbZqQQJ).
 
@@ -33,7 +32,11 @@ This repository has been tested under the following environment:
 
 ## Training
 
-  You can use `python train.py` to train your own models.
+  -  For training on the *WIDER* dataset, you need to download the [WIDER face training images](https://drive.google.com/file/d/0B6eKvaijfFUDQUUwd21EckhUbWs/view?usp=sharing) and the [face annotations](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/support/bbx_annotation/wider_face_split.zip) from the [dataset website](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/).
+
+  -  Download MXNet VGG16 ImageNet pretrained model from [here](http://data.dmlc.ml/models/imagenet/vgg/vgg16-0000.params) and put it under `model` directory.
+
+  -  Edit `./rcnn/config.py` and type `python train.py` to train your own models.
    
 
 ## Results
@@ -53,4 +56,10 @@ MIT LICENSE
   booktitle={IEEE International Conference on Computer Vision},
   year={2017},
 }
+
+@inproceedings{yang2016wider,
+  author = {Yang, Shuo and Luo, Ping and Loy, Chen Change and Tang, Xiaoou},
+  booktitle = {IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  title = {WIDER FACE: A Face Detection Benchmark},
+  year = {2016}}
 ```
