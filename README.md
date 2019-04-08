@@ -26,13 +26,13 @@ This repository has been tested under the following environment:
 
 ## Testing
 
-  -  Download the pre-trained model and place it in *`./model/`*
+  -  Download the pre-trained model and place it in *`./model/`*.
 
   -  You can use `python test.py` to test the pre-trained models.
 
 ## Training
 
-  -  For training on the *WIDER* dataset, you need to download the WIDER face training images from [BaiduCloud](https://pan.baidu.com/s/1NI4Pu4kyjH-j_miTqVKZlw) or [GoogleDrive](https://drive.google.com/file/d/0B6eKvaijfFUDQUUwd21EckhUbWs/view?usp=sharing) and the face annotations from the [dataset website](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/support/bbx_annotation/wider_face_split.zip). These files should be decompressed into `data/widerface` directory.
+  -  For training on the [*WIDER* dataset](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace), you need to download the WIDER face training images from [BaiduCloud](https://pan.baidu.com/s/1NI4Pu4kyjH-j_miTqVKZlw) or [GoogleDrive](https://drive.google.com/file/d/0B6eKvaijfFUDQUUwd21EckhUbWs/view?usp=sharing) and the face annotations from the [dataset website](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/support/bbx_annotation/wider_face_split.zip). These files should be decompressed into `data/widerface` directory.
 
   -  Download MXNet VGG16 ImageNet pretrained model from [here](http://data.dmlc.ml/models/imagenet/vgg/vgg16-0000.params) and put it under `model` directory.
 
