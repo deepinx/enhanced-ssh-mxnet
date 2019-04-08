@@ -53,6 +53,8 @@ class widerface(IMDB):
                 self._fp_bbox_map[name] = []
                 count += 1
                 n_anno = int(annos[count])
+                if n_anno==0:
+                    count += 1
                 for i in xrange(n_anno):
                     count += 1
                     bbox = annos[count].split(' ')[0:4]
