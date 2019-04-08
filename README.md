@@ -63,3 +63,9 @@ MIT LICENSE
   title = {WIDER FACE: A Face Detection Benchmark},
   year = {2016}}
 ```
+
+## Acknowledgment
+
+The code is adapted based on an intial fork from the [SSH](https://github.com/mahyarnajibi/SSH) and the [mxnet-SSH](https://github.com/deepinsight/mxnet-SSH) repository.
+
+
