@@ -45,7 +45,7 @@ config.TRAIN.IMAGE_ALIGN = 0
 config.TRAIN.MIN_BOX_SIZE = 6
 # R-CNN and RPN
 # size of images for each device, 2 for rcnn, 1 for rpn and e2e
-config.TRAIN.BATCH_IMAGES = 8
+config.TRAIN.BATCH_IMAGES = 16
 # e2e changes behavior of anchor loader and metric
 config.TRAIN.END2END = True
 # group images with similar aspect ratio
@@ -134,8 +134,8 @@ dataset.widerface = edict()
 dataset.widerface.dataset = 'widerface'
 dataset.widerface.image_set = 'train'
 dataset.widerface.test_image_set = 'val'
-dataset.widerface.root_path = 'data'
-dataset.widerface.dataset_path = 'data/widerface'
+dataset.widerface.root_path = '/media/3T_disk/my_datasets'
+dataset.widerface.dataset_path = '/media/3T_disk/my_datasets/widerface'
 dataset.widerface.NUM_CLASSES = 2
 
 

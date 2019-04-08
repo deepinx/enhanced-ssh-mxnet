@@ -9,10 +9,10 @@ import numpy as np
 import numpy.random as npr
 from distutils.util import strtobool
 
+from config import config
 from rcnn.processing.bbox_transform import nonlinear_pred, clip_boxes
 from rcnn.processing.generate_anchor import generate_anchors_fpn, anchors_plane
 from rcnn.processing.nms import gpu_nms_wrapper
-from rcnn.config import config
 
 DEBUG = False
 

@@ -1,6 +1,6 @@
 import mxnet as mx
 import numpy as np
-from rcnn.config import config
+from config import config
 from rcnn.PY_OP import fpn_roi_pooling, proposal_fpn, mask_roi, mask_output, proposal_fpn_out, rpn_fpn_ohem
 FPN = False
 USE_DCN=False

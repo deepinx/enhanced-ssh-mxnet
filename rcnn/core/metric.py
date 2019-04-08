@@ -2,8 +2,7 @@ from __future__ import print_function
 import sys
 import mxnet as mx
 import numpy as np
-
-from rcnn.config import config
+from config import config
 
 
 def get_rpn_names():

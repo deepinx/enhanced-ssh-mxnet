@@ -4,7 +4,7 @@ import sys
 import mxnet as mx
 import numpy as np
 from distutils.util import strtobool
-from ..config import config
+from config import config
 
 CALLING_COUNT=0
 COUNT_THRESH_FG=0

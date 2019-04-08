@@ -5,7 +5,8 @@ import os
 import math
 import sys
 import random
-from ..config import config
+
+from config import config
 
 def brightness_aug(src, x):
   alpha = 1.0 + random.uniform(-x, x)

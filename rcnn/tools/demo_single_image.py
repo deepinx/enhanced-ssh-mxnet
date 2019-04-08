@@ -1,6 +1,6 @@
 import argparse
-from ..config import default, generate_config
-from ..symbol import *
+from config import default, generate_config
+from symbol import *
 from ..utils.load_model import load_param
 from ..core.module import MutableModule
 from rcnn.processing.bbox_transform import nonlinear_pred, clip_boxes

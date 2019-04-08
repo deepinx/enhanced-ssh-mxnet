@@ -6,8 +6,8 @@ import numpy as np
 import os.path as osp
 import cPickle as pkl
 
-from ..config import config, default, generate_config
-from ..symbol import *
+from config import config, default, generate_config
+from symbol import *
 from ..core import callback, metric
 from ..core.loader import MaskROIIter
 from ..core.module import MutableModule

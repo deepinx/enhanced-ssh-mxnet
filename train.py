@@ -8,9 +8,9 @@ import numpy as np
 from mxnet.module import Module
 import mxnet.optimizer as optimizer
 
-from rcnn.logger import logger
-from rcnn.config import config, default, generate_config
-from rcnn.symbol import *
+from config import config, default, generate_config
+from symbol import *
+from logger import logger
 from rcnn.core import callback, metric
 from rcnn.core.loader import AnchorLoader, AnchorLoaderFPN, CropLoader
 from rcnn.core.module import MutableModule

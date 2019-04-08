@@ -4,7 +4,7 @@ fpn roi pooling
 
 import mxnet as mx
 import numpy as np
-from rcnn.config import config
+from config import config
 DEBUG = False
 
 

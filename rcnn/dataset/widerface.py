@@ -13,11 +13,11 @@ import os
 import numpy as np
 from PIL import Image
 
-from ..logger import logger
+from config import config
+from logger import logger
 from .imdb import IMDB
 from .pascal_voc_eval import voc_eval
 from .ds_utils import unique_boxes, filter_small_boxes
-from ..config import config
 
 class widerface(IMDB):
     def __init__(self, image_set, root_path, data_path):

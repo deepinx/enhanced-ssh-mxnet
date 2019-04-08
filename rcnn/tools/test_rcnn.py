@@ -2,9 +2,9 @@ import argparse
 import pprint
 import mxnet as mx
 
-from ..logger import logger
-from ..config import config, default, generate_config
-from ..symbol import *
+from logger import logger
+from config import config, default, generate_config
+from symbol import *
 from ..dataset import *
 from ..core.loader import TestLoader
 from ..core.tester import Predictor, pred_eval

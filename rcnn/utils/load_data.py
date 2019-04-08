@@ -1,6 +1,6 @@
 import numpy as np
-from ..logger import logger
-from ..config import config
+from logger import logger
+from config import config
 from ..dataset import *
 
 

@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 from mxnet.executor_manager import _split_input_slice
 
-from rcnn.config import config
+from config import config
 from rcnn.io.image import tensor_vstack
 from rcnn.io.rpn import get_rpn_testbatch, get_rpn_batch, assign_anchor, assign_anchor_fpn, get_crop_batch
 #from rcnn.io.rcnn import get_rcnn_testbatch, get_rcnn_batch

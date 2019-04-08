@@ -16,8 +16,8 @@ import logging
 import numpy as np
 import numpy.random as npr
 
-from ..logger import logger
-from ..config import config
+from logger import logger
+from config import config
 from .image import get_image, tensor_vstack, get_crop_image
 from ..processing.generate_anchor import generate_anchors, anchors_plane
 from ..processing.bbox_transform import bbox_overlaps, bbox_transform

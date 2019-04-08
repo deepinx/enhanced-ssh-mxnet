@@ -3,8 +3,8 @@ import logging
 import pprint
 import mxnet as mx
 
-from ..config import config, default, generate_config
-from ..symbol import *
+from config import config, default, generate_config
+from symbol import *
 from ..core import callback, metric
 from ..core.loader import AnchorLoaderFPN
 from ..core.module import MutableModule
