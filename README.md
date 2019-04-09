@@ -36,7 +36,7 @@ This repository has been tested under the following environment:
 
   -  Download MXNet VGG16 ImageNet pretrained model from [here](http://data.dmlc.ml/models/imagenet/vgg/vgg16-0000.params) and put it under `model` directory.
 
-  -  Edit `./rcnn/config.py` and type `python train.py` to train your own models.
+  -  Edit `config.py` and type `python train.py` to train your own models.
    
 
 ## Results
