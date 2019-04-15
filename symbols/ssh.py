@@ -171,7 +171,7 @@ def get_ssh_conv(data):
     return {8: m1, 16:m2, 32: m3}
 
 
-def get_ssh_train():
+def get_symbol():
     """
     Region Proposal Network with VGG
     :return: Symbol
