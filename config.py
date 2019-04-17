@@ -11,7 +11,7 @@ config.RCNN_FEAT_STRIDE = 16
 # dataset related params
 config.NUM_CLASSES = 2
 config.PRE_SCALES = [(1200, 1600)]  # first is scale (the shorter side); second is max size
-config.SCALES = [(1200, 1600)]  # first is scale (the shorter side); second is max size
+# config.SCALES = [(1200, 1600)]  # first is scale (the shorter side); second is max size
 #config.SCALES = [(1200, 1600), (600, 1000)]  # first is scale (the shorter side); second is max size
 config.SCALES = [(640, 640)]  # first is scale (the shorter side); second is max size
 config.ORIGIN_SCALE = False
@@ -125,6 +125,8 @@ network = edict()
 
 network.vgg = edict()
 network.ssh = edict()
+network.essh = edict()
+
 
 # dataset settings
 dataset = edict()
@@ -138,22 +140,32 @@ dataset.widerface.root_path = '/media/3T_disk/my_datasets'
 dataset.widerface.dataset_path = '/media/3T_disk/my_datasets/widerface'
 dataset.widerface.NUM_CLASSES = 2
 
+dataset.celeba = edict()
+dataset.celeba.dataset = 'celeba'
+dataset.celeba.image_set = 'train'
+dataset.celeba.test_image_set = 'val'
+dataset.celeba.root_path = '/media/3T_disk/my_datasets'
+dataset.celeba.dataset_path = '/media/3T_disk/my_datasets/celeba'
+dataset.celeba.NUM_CLASSES = 2
+
 
 # default settings
 default = edict()
 
-config.FIXED_PARAMS = ['^conv1', '^conv2', '^conv3', '^.*upsampling']
-#config.FIXED_PARAMS = ['^conv0', '^stage1', 'gamma', 'beta']  #for resnet
+config.FIXED_PARAMS = ['^conv1', '^conv2', '^conv3', '^.*upsampling']     #for ssh
+# config.FIXED_EPARAMS = ['^conv', '^ssh', '^rpn_cls', '^rpn_bbox',]   #for essh
 
 # default network
-default.network = 'ssh'
-default.pretrained = 'model/vgg16'
-#default.network = 'resnetssh'
+# default.network = 'ssh'
+default.network = 'essh'
+# default.pretrained = 'model/vgg16'
+default.pretrained = 'model/sshb'
 
 default.pretrained_epoch = 0
 default.base_lr = 0.004
 # default dataset
-default.dataset = 'widerface'
+# default.dataset = 'widerface'
+default.dataset = 'celeba'
 default.image_set = 'train'
 default.test_image_set = 'val'
 default.root_path = 'data/widerface'

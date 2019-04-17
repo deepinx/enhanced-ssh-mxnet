@@ -5,6 +5,7 @@ import os
 import math
 import sys
 import random
+from skimage import transform as stf
 
 from config import config
 
@@ -40,6 +41,7 @@ def color_aug(img, x):
     img = aug(img, x)
     #print(img.shape)
   return img
+
 
 def get_image(roidb, scale=False):
     """
@@ -225,6 +227,28 @@ def __get_crop_image(roidb):
         processed_roidb.append(new_rec)
     return processed_ims, processed_roidb
 
+def sim_transform(data, center, output_size, scale, rotation):
+  scale_ratio = float(output_size)/scale
+  rot = float(rotation)*np.pi/180.0
+  #translation = (output_size/2-center[0]*scale_ratio, output_size/2-center[1]*scale_ratio)
+  t1 = stf.SimilarityTransform(scale=scale_ratio)
+  cx = center[0]*scale_ratio
+  cy = center[1]*scale_ratio
+  t2 = stf.SimilarityTransform(translation=(-1*cx, -1*cy))
+  t3 = stf.SimilarityTransform(rotation=rot)
+  t4 = stf.SimilarityTransform(translation=(output_size/2, output_size/2))
+  t = t1+t2+t3+t4
+  trans = t.params[0:2]
+  #print('M', scale, rotation, trans)
+  cropped = cv2.warpAffine(data,trans,(output_size, output_size), borderValue = 0.0)
+  return cropped, trans
+
+def transform_pt(pt, trans):
+  new_pt = np.array([pt[0], pt[1], 1.]).T
+  new_pt = np.dot(trans, new_pt)
+  #print('new_pt', new_pt.shape, new_pt)
+  return new_pt[:2]
+
 def get_crop_image(roidb):
     """
     preprocess image and return processed roidb
@@ -257,49 +281,36 @@ def get_crop_image(roidb):
             im[m[1]:m[3],m[0]:m[2],:] = 0
             #print('find mask', m, file=sys.stderr)
         SIZE = config.SCALES[0][0]
-        PRE_SCALES = [0.3, 0.45, 0.6, 0.8, 1.0]
-        _scale = random.choice(PRE_SCALES)
-        #_scale = np.random.uniform(PRE_SCALES[0], PRE_SCALES[-1])
-        size = int(np.round(_scale*np.min(im.shape[0:2])))
+        PRE_SCALES = [0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0]
+        size = int(np.round(np.min(im.shape[0:2])))
         im_scale = float(SIZE)/size
-        #origin_im_scale = im_scale
-        #size = np.round(np.min(im.shape[0:2])*im_scale)
-        #im_scale *= (float(SIZE)/size)
         origin_shape = im.shape
-        if _scale>10.0: #avoid im.size<SIZE, never?
-          sizex = int(np.round(im.shape[1]*im_scale))
-          sizey = int(np.round(im.shape[0]*im_scale))
-          if sizex<SIZE:
-            sizex = SIZE
-            print('keepx', sizex)
-          if sizey<SIZE:
-            sizey = SIZE
-            print('keepy', sizex)
-          im = cv2.resize(im, (sizex, sizey), interpolation=cv2.INTER_LINEAR)
-        else:
-          im = cv2.resize(im, None, None, fx=im_scale, fy=im_scale, interpolation=cv2.INTER_LINEAR)
-        assert im.shape[0]>=SIZE and im.shape[1]>=SIZE
 
         new_rec = roi_rec.copy()
-        new_rec['boxes'] = roi_rec['boxes'].copy() * im_scale
+        new_rec['boxes'] = roi_rec['boxes'].copy()
         # boxes_new = new_rec['boxes'].copy()
         # box = boxes_new[0]
+        new_rec['landmarks'] = roi_rec['landmarks'].copy()
+        # landmarks_new = new_rec['landmarks'].copy()
+        # landmark = landmarks_new[0]
+        # cv2.rectangle(im, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), (0, 255, 0), 2)
+        # for i in range(5):
+        #   cv2.circle(im, (int(landmark[2*i]), int(landmark[2*i+1])), 1, (0, 0, 255), 2)
+        # cv2.imshow("im", im)
+        # cv2.waitKey(0)
         retry = 0
         LIMIT = 25
-        size = SIZE
         while retry<LIMIT:
-          up, left = (np.random.randint(0, im.shape[0]-size+1), np.random.randint(0, im.shape[1]-size+1))
+          center = np.array( (im.shape[1]/2, im.shape[0]/2) )
+          rotate = 0    #np.random.randint(-40, 40)
+          scale_config = 0.2
+          scale_ratio = random.choice(PRE_SCALES)   #np.random.uniform(0.5, 1)
+          _scale = int(size / scale_ratio)
+          im_new, trans = sim_transform(im, center, SIZE, _scale, rotate)
+
           boxes_new = new_rec['boxes'].copy()
-          im_new = im[up:(up+size), left:(left+size), :]
-          #print('crop', up, left, size, im_scale)
-          boxes_new[:,0] -= left
-          boxes_new[:,2] -= left
-          boxes_new[:,1] -= up
-          boxes_new[:,3] -= up
-          if 'landmarks' in roi_rec:
-            landmarks_new = new_rec['landmarks'].copy()
-            landmarks_new[:,::2] -= left
-            landmarks_new[:,1::2] -= up
+          landmarks_new = new_rec['landmarks'].copy()
+            
           #im_new = cv2.resize(im_new, (SIZE, SIZE), interpolation=cv2.INTER_LINEAR)
           #boxes_new *= im_scale
           #print(origin_shape, im_new.shape, im_scale)
@@ -307,21 +318,28 @@ def get_crop_image(roidb):
           valid_boxes = []
           valid_landmarks = []
           for i in xrange(boxes_new.shape[0]):
-            box = boxes_new[i]
-            center = np.array(([box[0], box[1]]+[box[2], box[3]]))/2
+            for j in xrange(2):
+              pt = boxes_new[:,j*2:j*2+2]
+              #pt = pt[::-1]
+              boxes_new[i,j*2:j*2+2] = transform_pt(pt[i], trans)
+            for j in xrange(5):
+              pt = landmarks_new[:,j*2:j*2+2]
+              #pt = pt[::-1]
+              landmarks_new[i,j*2:j*2+2] = transform_pt(pt[i], trans)
 
-            #box[0] = max(0, box[0])
-            #box[1] = max(0, box[1])
-            #box[2] = min(im_new.shape[1], box[2])
-            #box[3] = min(im_new.shape[0], box[3])
+            box = boxes_new[i]
             box_size = max(box[2]-box[0], box[3]-box[1])
 
-            if center[0]<0 or center[1]<0 or center[0]>=im_new.shape[1] or center[1]>=im_new.shape[0]:
+            if box[0]<0 or box[1]<0 or box[2]>im_new.shape[1] or box[3]>im_new.shape[0]:
               continue
             if box_size<config.TRAIN.MIN_BOX_SIZE:
               continue
             valid.append(i)
             valid_boxes.append(box)
+            landmark = landmarks_new[i]
+            valid_landmarks.append(landmark)
+          #   for i in range(5):
+          #     cv2.circle(im_new, (int(landmark[2*i]), int(landmark[2*i+1])), 1, (0, 0, 255), 2)
           #   cv2.rectangle(im_new, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), (0, 255, 0), 2)
           # cv2.imshow("im_new", im_new)
           # cv2.waitKey(0)

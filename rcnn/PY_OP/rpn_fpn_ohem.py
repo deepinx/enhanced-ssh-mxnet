@@ -64,7 +64,10 @@ class RPNFPNOHEMOperator(mx.operator.CustomOp):
             for k in STAT:
               if k==0:
                 continue
-              acc = float(ACC[k])/STAT[k]
+              if STAT[k]==0:
+                acc = 0
+              else:
+                acc = float(ACC[k])/STAT[k]
               S[k] = (STAT[k], ACC[k], acc)
             print('STAT ', S, file=sys.stderr)
             for k in STAT:

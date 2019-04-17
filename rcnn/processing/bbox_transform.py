@@ -96,6 +96,52 @@ def nonlinear_transform(ex_rois, gt_rois):
     return targets
 
 
+def landmark_transform(ex_rois, gt_landmarks):
+    """
+    compute bounding box regression targets from ex_rois to gt_rois
+    :param ex_rois: [N, 4]
+    :param gt_rois: [N, 10]
+    :return: [N, 10]
+    """
+    if ex_rois.shape[0] == 0:
+        return np.zeros((gt_rois.shape))
+
+    ex_widths = ex_rois[:, 2] - ex_rois[:, 0] + 1.0
+    ex_heights = ex_rois[:, 3] - ex_rois[:, 1] + 1.0
+    ex_ctr_x = ex_rois[:, 0] + 0.5 * (ex_widths - 1.0)
+    ex_ctr_y = ex_rois[:, 1] + 0.5 * (ex_heights - 1.0)
+
+
+    gt_p1_x = gt_landmarks[:, 0]
+    gt_p1_y = gt_landmarks[:, 1]
+    gt_p2_x = gt_landmarks[:, 2]
+    gt_p2_y = gt_landmarks[:, 3]
+    gt_p3_x = gt_landmarks[:, 4]
+    gt_p3_y = gt_landmarks[:, 5]
+    gt_p4_x = gt_landmarks[:, 6]
+    gt_p4_y = gt_landmarks[:, 7]
+    gt_p5_x = gt_landmarks[:, 8]
+    gt_p5_y = gt_landmarks[:, 9]
+
+
+    targets = np.zeros(gt_landmarks.shape)
+    # x1
+    x = gt_p1_x * ex_widths
+    # print("aa", d1x.shape, widths.shape, ctr_x.shape, x.shape)
+    targets[:, 0] = (gt_p1_x - ex_ctr_x) / (ex_widths + 1e-14)
+    targets[:, 1] = (gt_p1_y - ex_ctr_y) / (ex_heights + 1e-14)
+    targets[:, 2] = (gt_p2_x - ex_ctr_x) / (ex_widths + 1e-14)
+    targets[:, 3] = (gt_p2_y - ex_ctr_y) / (ex_heights + 1e-14)
+    targets[:, 4] = (gt_p3_x - ex_ctr_x) / (ex_widths + 1e-14)
+    targets[:, 5] = (gt_p3_y - ex_ctr_y) / (ex_heights + 1e-14)
+    targets[:, 6] = (gt_p4_x - ex_ctr_x) / (ex_widths + 1e-14)
+    targets[:, 7] = (gt_p4_y - ex_ctr_y) / (ex_heights + 1e-14)
+    targets[:, 8] = (gt_p5_x - ex_ctr_x) / (ex_widths + 1e-14)
+    targets[:, 9] = (gt_p5_y - ex_ctr_y) / (ex_heights + 1e-14)
+
+    return targets
+
+
 def nonlinear_pred(boxes, box_deltas):
     """
     Transform the set of class-agnostic boxes into class-specific boxes

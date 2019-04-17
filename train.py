@@ -1,18 +1,20 @@
 from __future__ import print_function
 import sys
+import os
 import argparse
 import pprint
 import re
 import mxnet as mx
 import numpy as np
-from mxnet.module import Module
-import mxnet.optimizer as optimizer
+sys.path.append(os.path.join(os.path.dirname(__file__), 'symbols'))
+import ssh
+import essh
 
 from config import config, default, generate_config
-from symbol import *
 from logger import logger
 from rcnn.core import callback, metric
 from rcnn.core.loader import AnchorLoader, AnchorLoaderFPN, CropLoader
+from rcnn.core.eloader import EAnchorLoader, EAnchorLoaderFPN, ECropLoader
 from rcnn.core.module import MutableModule
 from rcnn.utils.load_data import load_gt_roidb, merge_roidb, filter_roidb
 from rcnn.utils.load_model import load_param
@@ -40,9 +42,12 @@ def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch,
 
     # load dataset and prepare imdb for training
     image_sets = [iset for iset in args.image_set.split('+')]
-    roidbs = [load_gt_roidb(args.dataset, image_set, args.root_path, args.dataset_path,
-                            flip=not args.no_flip)
-              for image_set in image_sets]
+    if args.network=='ssh':
+      roidbs = [load_gt_roidb(args.dataset, image_set, args.root_path, args.dataset_path,
+                              flip=not args.no_flip) for image_set in image_sets]
+    elif args.network=='essh':
+      roidbs = [load_gt_roidb(args.dataset, image_set, args.root_path, args.dataset_path,
+                              flip=False) for image_set in image_sets]
     roidb = merge_roidb(roidbs)
     roidb = filter_roidb(roidb)
 
@@ -54,7 +59,7 @@ def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch,
     #                          feat_stride=config.RPN_FEAT_STRIDE, anchor_scales=config.ANCHOR_SCALES,
     #                          anchor_ratios=config.ANCHOR_RATIOS, aspect_grouping=config.TRAIN.ASPECT_GROUPING)
 
-    sym = eval('get_' + args.network + '_train')()
+    sym = eval(args.network).get_symbol()
     #print(sym.get_internals())
     feat_sym = []
     for stride in config.RPN_FEAT_STRIDE:
@@ -64,7 +69,11 @@ def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch,
 
     #train_data = AnchorLoaderFPN(feat_sym, roidb, batch_size=input_batch_size, shuffle=not args.no_shuffle,
     #                              ctx=ctx, work_load_list=args.work_load_list)
-    train_data = CropLoader(feat_sym, roidb, batch_size=input_batch_size, shuffle=not args.no_shuffle,
+    if args.network=='ssh':
+      train_data = CropLoader(feat_sym, roidb, batch_size=input_batch_size, shuffle=not args.no_shuffle,
+                                  ctx=ctx, work_load_list=args.work_load_list)
+    elif args.network=='essh':
+      train_data = ECropLoader(feat_sym, roidb, batch_size=input_batch_size, shuffle=not args.no_shuffle,
                                   ctx=ctx, work_load_list=args.work_load_list)
 
 
@@ -129,7 +138,7 @@ def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch,
     #                    fixed_param_prefix=fixed_param_prefix)
     fixed_param_names = get_fixed_params(sym, fixed_param_prefix)
     print('fixed', fixed_param_names, file=sys.stderr)
-    mod = Module(sym, data_names=data_names, label_names=label_names,
+    mod = mx.module.Module(sym, data_names=data_names, label_names=label_names,
                         logger=logger, context=ctx, work_load_list=args.work_load_list,
                         fixed_param_names=fixed_param_names)
 
@@ -141,14 +150,22 @@ def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch,
     #else:#train rpn only
     #print('sym', sym.list_outputs())
     #metric_names = ['RPNAccMetric', 'RPNLogLossMetric', 'RPNL1LossMetric']
-    mids = [0,4,8]
-    for mid in mids:
-      _metric = metric.RPNAccMetric(pred_idx=mid, label_idx=mid+1)
-      eval_metrics.add(_metric)
-      #_metric = metric.RPNLogLossMetric(pred_idx=mid, label_idx=mid+1)
-      #eval_metrics.add(_metric)
-      _metric = metric.RPNL1LossMetric(loss_idx=mid+2, weight_idx=mid+3)
-      eval_metrics.add(_metric)
+    if args.network=='ssh':
+      mids = [0,4,8]
+      for mid in mids:
+        _metric = metric.RPNAccMetric(pred_idx=mid, label_idx=mid+1)
+        eval_metrics.add(_metric)
+        #_metric = metric.RPNLogLossMetric(pred_idx=mid, label_idx=mid+1)
+        #eval_metrics.add(_metric)
+        _metric = metric.RPNL1LossMetric(loss_idx=mid+2, weight_idx=mid+3)
+        eval_metrics.add(_metric)
+    elif args.network=='essh':
+      mids = [0,5,10]
+      for mid in mids:
+        _metric = metric.RPNAccMetric(pred_idx=mid, label_idx=mid+1)
+        eval_metrics.add(_metric)
+        _metric = metric.RPNL1LossMetric(loss_idx=mid+4, weight_idx=mid+3)
+        eval_metrics.add(_metric)
 
     #rpn_eval_metric = metric.RPNAccMetric()
     #rpn_cls_metric = metric.RPNLogLossMetric()
@@ -179,7 +196,7 @@ def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch,
     logger.info('lr %f lr_epoch_diff %s lr_iters %s' % (lr, lr_epoch_diff, lr_iters))
     #lr_scheduler = mx.lr_scheduler.MultiFactorScheduler(lr_iters, lr_factor)
     # optimizer
-    opt = optimizer.SGD(learning_rate=lr, momentum=0.9, wd=0.0005, rescale_grad=1.0/len(ctx), clip_gradient=None)
+    opt = mx.optimizer.SGD(learning_rate=lr, momentum=0.9, wd=0.0005, rescale_grad=1.0/len(ctx), clip_gradient=None)
     initializer=mx.init.Xavier()
     #initializer = mx.init.Xavier(rnd_type='gaussian', factor_type="out", magnitude=2) #resnet style
 
@@ -198,7 +215,6 @@ def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch,
         _name = 'rpn_cls_score_stride%d_output' % stride
         rpn_cls_score = all_layers[_name]
 
-
         # prepare rpn data
         rpn_cls_score_reshape = mx.symbol.Reshape(data=rpn_cls_score,
                                                   shape=(0, 2, -1, 0),
@@ -214,6 +230,10 @@ def train_net(args, ctx, pretrained, epoch, prefix, begin_epoch, end_epoch,
         rpn_bbox_pred = all_layers[_name]
         outs.append(rpn_cls_prob_reshape)
         outs.append(rpn_bbox_pred)
+        if args.network=='essh':
+          _name = 'rpn_kpoint_pred_stride%d_output' % stride
+          rpn_kpoint_pred = all_layers[_name]
+          outs.append(rpn_kpoint_pred)
       _sym = mx.sym.Group(outs)
       mx.model.save_checkpoint(prefix, epoch, _sym, arg, aux)
 
