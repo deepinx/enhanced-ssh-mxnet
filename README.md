@@ -31,16 +31,16 @@ This repository has been tested under the following environment:
   -  You can use `python test.py` to test the pre-trained models.
 
 ## Training
-(1) First, you should train an original SSH model on the [*WIDER* dataset](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace).
+1. First, you should train an original SSH model on the [*WIDER* dataset](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace).
   -  Download the WIDER face training images from [BaiduCloud](https://pan.baidu.com/s/1NI4Pu4kyjH-j_miTqVKZlw) or [GoogleDrive](https://drive.google.com/file/d/0B6eKvaijfFUDQUUwd21EckhUbWs/view?usp=sharing) and the face annotations from the [dataset website](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/support/bbx_annotation/wider_face_split.zip). These files should be decompressed into `data/widerface` directory. 
   -  Download MXNet VGG16 ImageNet pretrained model from [here](http://data.dmlc.ml/models/imagenet/vgg/vgg16-0000.params) and put it under `model` directory. 
   -  Edit `config.py` and type `python train.py` or using the following command to train your SSH model.
 ```
 python train.py --network ssh --prefix model/sshb --dataset widerface --gpu 0 --pretrained model/vgg16 --lr 0.004 --lr_step 30,40,50
 ```
-(2) Then, train an ESSH model using the above SSH model as the pre-trained model on Large-scale CelebFaces Attributes ([CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)) Dataset. 
-  - Download the CelebA dataset from [BaiduCloud](http://pan.baidu.com/s/1eSNpdRG) or [GoogleDrive](https://drive.google.com/open?id=0B7EVK8r0v71pWEZsZE9oNnFzTm8).
-  - Download our re-annotated bounding box labels from [here]() and replace `Anno/list_bbox_celeba.txt` with this file. Note that our bounding box annotations  are more accurate than the original labels, so be sure to download and replace it.
+2. Then, use the above SSH model as the pre-training model to train the final ESSH model on [CelebA Dataset](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html). 
+  - Download the CelebA dataset from [BaiduCloud](http://pan.baidu.com/s/1eSNpdRG) or [GoogleDrive](https://drive.google.com/open?id=0B7EVK8r0v71pWEZsZE9oNnFzTm8) and decompressed it into `data/celeba` directory.
+  - Download our re-annotated bounding box labels from [BaiduCloud](https://pan.baidu.com/s/1wiOo__wWjjiauI7li_naDg) or [GoogleDrive](https://drive.google.com/open?id=1bIq7Eu108HySN5y5WLKbIks5isDxAYnh) and replace `Anno/list_bbox_celeba.txt` with this file. Note that our bounding box annotations  are more accurate than the original labels, so be sure to download and replace it.
   -  Edit `config.py` and type `python train.py` or using the following command to train the ESSH model.
 ```
 python train.py --network essh --prefix model/e2e --dataset celeba --gpu 0 --pretrained model/sshb --lr 0.004 --lr_step 10,15
