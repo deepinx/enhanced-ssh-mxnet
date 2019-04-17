@@ -31,13 +31,20 @@ This repository has been tested under the following environment:
   -  You can use `python test.py` to test the pre-trained models.
 
 ## Training
-
-  -  For training on the [*WIDER* dataset](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace), you need to download the WIDER face training images from [BaiduCloud](https://pan.baidu.com/s/1NI4Pu4kyjH-j_miTqVKZlw) or [GoogleDrive](https://drive.google.com/file/d/0B6eKvaijfFUDQUUwd21EckhUbWs/view?usp=sharing) and the face annotations from the [dataset website](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/support/bbx_annotation/wider_face_split.zip). These files should be decompressed into `data/widerface` directory.
-
-  -  Download MXNet VGG16 ImageNet pretrained model from [here](http://data.dmlc.ml/models/imagenet/vgg/vgg16-0000.params) and put it under `model` directory.
-
-  -  Edit `config.py` and type `python train.py` to train your own models.
-   
+(1) First, you should train an original SSH model on the [*WIDER* dataset](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace).
+  -  Download the WIDER face training images from [BaiduCloud](https://pan.baidu.com/s/1NI4Pu4kyjH-j_miTqVKZlw) or [GoogleDrive](https://drive.google.com/file/d/0B6eKvaijfFUDQUUwd21EckhUbWs/view?usp=sharing) and the face annotations from the [dataset website](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/support/bbx_annotation/wider_face_split.zip). These files should be decompressed into `data/widerface` directory. 
+  -  Download MXNet VGG16 ImageNet pretrained model from [here](http://data.dmlc.ml/models/imagenet/vgg/vgg16-0000.params) and put it under `model` directory. 
+  -  Edit `config.py` and type `python train.py` or using the following command to train your SSH model.
+```
+python train.py --network ssh --prefix model/sshb --dataset widerface --gpu 0 --pretrained model/vgg16 --lr 0.004 --lr_step 30,40,50
+```
+(2) Then, train an ESSH model using the above SSH model as the pre-trained model on Large-scale CelebFaces Attributes ([CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)) Dataset. 
+  - Download the CelebA dataset from [BaiduCloud](http://pan.baidu.com/s/1eSNpdRG) or [GoogleDrive](https://drive.google.com/open?id=0B7EVK8r0v71pWEZsZE9oNnFzTm8).
+  - Download our re-annotated bounding box labels from [here]() and replace `Anno/list_bbox_celeba.txt` with this file. Note that our bounding box annotations  are more accurate than the original labels, so be sure to download and replace it.
+  -  Edit `config.py` and type `python train.py` or using the following command to train the ESSH model.
+```
+python train.py --network essh --prefix model/e2e --dataset celeba --gpu 0 --pretrained model/sshb --lr 0.004 --lr_step 10,15
+```
 
 ## Results
 ![Alignment Result](https://raw.githubusercontent.com/deepinx/SSH_alignment/master/sample-images/detection_result.png)
@@ -62,6 +69,14 @@ MIT LICENSE
   booktitle = {IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
   title = {WIDER FACE: A Face Detection Benchmark},
   year = {2016}}
+  
+  @inproceedings{liu2015faceattributes,
+  author = {Ziwei Liu and Ping Luo and Xiaogang Wang and Xiaoou Tang},
+  title = {Deep Learning Face Attributes in the Wild},
+  booktitle = {Proceedings of International Conference on Computer Vision (ICCV)},
+  month = December,
+  year = {2015} 
+}
 ```
 
 ## Acknowledgment
