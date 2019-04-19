@@ -1,9 +1,7 @@
 
 ## The MXNet Enhanced SSH (ESSH) for Face Detection and Alignment
 
-The localization of five semantic facial landmarks is added to original SSH method.
-
-You can use this ESSH method for face detection and 2D-5P face alignment.
+The Single Stage Headless (SSH) face detector was introduced in [ICCV 2017 paper](https://arxiv.org/abs/1708.03979). This repository includes code for training and evaluating the Enhance SSH (ESSH) face detector, which adds localization of five semantic facial landmarks to the original SSH method and also improves accuracy. You can use this ESSH method for face detection and 2D-5P face alignment.
 
 Pre-trained models can be downloaded on [BaiduCloud](https://pan.baidu.com/s/1sghM7w1nN3j8-UHfBHo6rA) or [GoogleDrive](https://drive.google.com/open?id=1eX_i0iZxZTMyJ4QccYd2F4x60GbZqQQJ).
 
