@@ -52,6 +52,20 @@ python train.py --network ssh --prefix model/sshb --dataset widerface --gpu 0 --
 python train.py --network essh --prefix model/e2e --dataset celeba --gpu 0 --pretrained model/sshb --lr 0.004 --lr_step 10,15
 ```
 
+## Evaluation
+  
+  To evaluate pre-trained models on validation set of the WIDER dataset, you can use 'python test_on_wider.py' to obtain the detection accuracy on the validset. We give some examples below. 
+
+1. Evaluate SSH model on validation set of the WIDER dataset without an image pyramid.
+```
+python test_on_wider.py --dataset widerface --method_name SSH --prefix model/sshb --gpu 0 --output ./output --thresh 0.05
+```
+
+2. Evaluate ESSH model on validation set of the WIDER dataset with an image pyramid.
+```
+python test_on_wider.py --dataset widerface --method_name ESSH-Pyramid --prefix model/essh --gpu 0 --output ./output --pyramid --thresh 0.05
+```
+
 ## Results
 ![Alignment Result](https://raw.githubusercontent.com/deepinx/SSH_alignment/master/sample-images/detection_result.png)
 
