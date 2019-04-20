@@ -54,7 +54,7 @@ python train.py --network essh --prefix model/e2e --dataset celeba --gpu 0 --pre
 
 ## Evaluation
   
-  To evaluate pre-trained models on validation set of the WIDER dataset, you can use 'python test_on_wider.py' to obtain the detection accuracy on the validset. We give some examples below. 
+  To evaluate pre-trained models on validation set of the WIDER dataset, you can use `python test_on_wider.py` to obtain the performance in “easy”, “medium”, and “hard” subsets of the validation set respectively. We give some examples below. 
 
 1. Evaluate SSH model on validation set of the WIDER dataset without an image pyramid.
 ```
