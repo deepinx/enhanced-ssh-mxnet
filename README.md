@@ -21,6 +21,7 @@ This repository has been tested under the following environment:
 -   Ubuntu 18.04
 -   Mxnet-cu90 (==1.3.0)
 -   Cython 0.29.6
+-   MATLAB R2016b
 
 ## Installation
 
@@ -54,7 +55,7 @@ python train.py --network essh --prefix model/e2e --dataset celeba --gpu 0 --pre
 
 ## Evaluation
   
-  To evaluate pre-trained models on validation set of the WIDER dataset, you can use `python test_on_wider.py` to obtain the performance in “easy”, “medium”, and “hard” subsets of the validation set respectively. We give some examples below. 
+   To evaluate pre-trained models on validation set of the WIDER dataset, you can use `python test_on_wider.py` to obtain the performance in “easy”, “medium”, and “hard” subsets respectively. The evaluation is based on the official *WIDER* evaluation tool which requires *MATLAB*. You need to download the [validation images](https://drive.google.com/file/d/0B6eKvaijfFUDd3dIRmpvSk8tLUk/view?usp=sharing) and the [annotations](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/support/bbx_annotation/wider_face_split.zip) (if not downloaded for training) from the *WIDER* [dataset website](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/). We give some examples below. 
 
 1. Evaluate SSH model on validation set of the WIDER dataset without an image pyramid.
 ```
