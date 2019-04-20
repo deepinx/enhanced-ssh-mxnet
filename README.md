@@ -9,9 +9,9 @@ Evaluation on WIDER FACE:
 
 | Impelmentation     | Easy-Set | Medium-Set | Hard-Set |
 | ------------------ | -------- | ---------- | -------- |
-| Original Caffe SSH | 0.93123  | 0.92106    | 0.84582  |
-| Insightface SSH Model | 0.93489  | 0.92281    | 0.84525  |
-| Our ESSH Model | 0.93799  | 0.92726    | 0.85162  |
+| *Original Caffe SSH* | 0.93123  | 0.92106    | 0.84582  |
+| *Insightface SSH Model* | 0.93489  | 0.92281    | 0.84525  |
+| *Our ESSH Model* | **0.93799**  | **0.92726**  | **0.85162**  |
 
 ## Environment
 
