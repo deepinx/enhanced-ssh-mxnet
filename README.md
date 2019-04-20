@@ -70,7 +70,7 @@ python test_on_wider.py --dataset widerface --method_name ESSH-Pyramid --prefix 
 
 Results of face detection and 2D-5P face alignment (inferenced from ESSH model) are shown below.
 
-<div align=center><img src="https://raw.githubusercontent.com/deepinx/SSH_alignment/master/sample-images/detection_result.png" width="650"/></div>
+<div align=center><img src="https://raw.githubusercontent.com/deepinx/SSH_alignment/master/sample-images/detection_result.png" width="700"/></div>
 
 ## License
 
