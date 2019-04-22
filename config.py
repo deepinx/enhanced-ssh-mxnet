@@ -164,8 +164,8 @@ default.pretrained = 'model/sshb'
 default.pretrained_epoch = 0
 default.base_lr = 0.004
 # default dataset
-# default.dataset = 'widerface'
-default.dataset = 'celeba'
+default.dataset = 'widerface'
+# default.dataset = 'celeba'
 default.image_set = 'train'
 default.test_image_set = 'val'
 default.root_path = 'data/widerface'

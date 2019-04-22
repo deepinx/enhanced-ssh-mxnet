@@ -7,6 +7,7 @@ import numpy as np
 import mxnet as mx
 from mxnet import ndarray as nd
 import cv2
+import subprocess
 from essh_detector import ESSHDetector
 from logger import logger
 from config import config, default, generate_config
@@ -31,14 +32,14 @@ def parse_args():
     parser.add_argument('--dataset_path', help='dataset path', default=default.dataset_path, type=str)
     parser.add_argument('--method_name', help='method name for official WIDER toolbox', default='ESSH-Pyramid', type=str)
     # testing
-    parser.add_argument('--prefix', help='model to test with', default=default.e2e_prefix, type=str)
+    parser.add_argument('--prefix', help='model to test with', default='model/essh', type=str)
     parser.add_argument('--epoch', help='model to test with', default=0, type=int)
     parser.add_argument('--gpu', help='GPU device to test with', default=0, type=int)
-    parser.add_argument('--output', help='output folder', default=os.path.join('./', 'output'), type=str)
+    parser.add_argument('--output', help='output folder', default=os.path.join('./output', 'essh'), type=str)
     parser.add_argument('--pyramid', help='enable pyramid test', action='store_true')
     # rcnn
     parser.add_argument('--vis', help='turn on visualization', action='store_true')
-    parser.add_argument('--thresh', help='valid detection threshold', default=0.05, type=float)
+    parser.add_argument('--thresh', help='valid detection threshold', default=0.02, type=float)
     parser.add_argument('--shuffle', help='shuffle data on visualization', action='store_true')
     parser.add_argument('--has_rpn', help='generate proposals on the fly', action='store_true', default=True)
     parser.add_argument('--proposal', help='can be ss for selective search or rpn', default='rpn', type=str)
@@ -62,7 +63,8 @@ def get_boxes(roi, pyramid):
         im_scale = float(max_size) / float(im_size_max)
     scales = [im_scale]
   else:
-    TEST_SCALES = [500, 800, 1200, 1600]
+    # TEST_SCALES = [500, 800, 1200, 1600]
+    TEST_SCALES = [500, 800, 1100, 1400, 1700]
     target_size = 800
     max_size = 1200
     im_shape = im.shape
