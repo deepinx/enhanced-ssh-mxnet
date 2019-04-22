@@ -11,7 +11,9 @@ Evaluation on WIDER FACE:
 | ------------------ | -------- | ---------- | -------- |
 | *Original Caffe SSH* | 0.93123  | 0.92106    | 0.84582  |
 | *Insightface SSH Model* | 0.93489  | 0.92281    | 0.84525  |
-| *Our ESSH Model* | **0.93799**  | **0.92726**  | **0.85162**  |
+| *Our ESSH Model* | **0.94228**  | **0.93207**  | **0.87105**  |
+
+Note: More accurate pre-trained models will be released soon.
 
 ## Environment
 
