@@ -7,11 +7,12 @@ Pre-trained models can be downloaded on [BaiduCloud](https://pan.baidu.com/s/1sg
 
 Evaluation on WIDER FACE:
 
-| Impelmentation     | Easy-Set | Medium-Set | Hard-Set |
+|   Model   | Easy-Set | Medium-Set | Hard-Set |
 | ------------------ | -------- | ---------- | -------- |
 | *Original Caffe SSH* | 0.93123  | 0.92106    | 0.84582  |
 | *Insightface SSH Model* | 0.93489  | 0.92281    | 0.84525  |
-| *Our ESSH Model* | **0.94228**  | **0.93207**  | **0.87105**  |
+| *ESSH-VGG16 Model* | 0.94228  | 0.93207  | 0.87105  |
+| *ESSH-Resnet50 Model* | **0.96100**  | **0.95122**  | **0.89610**  |
 
 Note: More accurate pre-trained models will be released soon.
 
