@@ -8,7 +8,7 @@ from essh_detector import ESSHDetector
 scales = [1200, 1600]
 #scales = [600, 1200]
 t = 10
-detector = ESSHDetector('./model/essh', 0)
+detector = ESSHDetector('./model/essh-r50', 0, ctx_id=0)
 
 def main():
   f = './sample-images/t1.jpg'

@@ -30,12 +30,12 @@ def parse_args():
     parser.add_argument('--image_set', help='image_set name', default=default.test_image_set, type=str)
     parser.add_argument('--root_path', help='output data folder', default=default.root_path, type=str)
     parser.add_argument('--dataset_path', help='dataset path', default=default.dataset_path, type=str)
-    parser.add_argument('--method_name', help='method name for official WIDER toolbox', default='ESSH-Pyramid', type=str)
+    parser.add_argument('--method_name', help='method name for official WIDER toolbox', default='ESSH-R50', type=str)
     # testing
-    parser.add_argument('--prefix', help='model to test with', default='model/essh', type=str)
+    parser.add_argument('--prefix', help='model to test with', default='model/essh-r50', type=str)
     parser.add_argument('--epoch', help='model to test with', default=0, type=int)
     parser.add_argument('--gpu', help='GPU device to test with', default=0, type=int)
-    parser.add_argument('--output', help='output folder', default=os.path.join('./output', 'essh'), type=str)
+    parser.add_argument('--output', help='output folder', default=os.path.join('./output', 'essh-r50'), type=str)
     parser.add_argument('--pyramid', help='enable pyramid test', action='store_true')
     # rcnn
     parser.add_argument('--vis', help='turn on visualization', action='store_true')

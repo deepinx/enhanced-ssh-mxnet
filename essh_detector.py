@@ -9,13 +9,12 @@ from distutils.util import strtobool
 
 from rcnn.processing.bbox_transform import nonlinear_pred, clip_boxes, landmark_pred, clip_points
 from rcnn.processing.generate_anchor import generate_anchors_fpn, anchors_plane
-from rcnn.processing.nms import gpu_nms_wrapper, py_nms_wrapper
+from rcnn.processing.nms import gpu_nms_wrapper, cpu_nms_wrapper, py_nms_wrapper
 
 
 class ESSHDetector:
   def __init__(self, prefix, epoch, ctx_id=0, test_mode=False):
     self.ctx_id = ctx_id
-    self.ctx = mx.gpu(self.ctx_id)
     self.test_mode = test_mode
     self.fpn_keys = []
     fpn_stride = []
@@ -37,12 +36,17 @@ class ESSHDetector:
     self.nms_threshold = 0.3
     self._bbox_pred = nonlinear_pred
     sym, arg_params, aux_params = mx.model.load_checkpoint(prefix, epoch)
-    # self.nms = gpu_nms_wrapper(self.nms_threshold, self.ctx_id)
-    self.nms = py_nms_wrapper(self.nms_threshold)
-    self.pixel_means = np.array([103.939, 116.779, 123.68]) #BGR,ESSH
-    # self.pixel_means = np.array([0.0, 0.0, 0.0]) #BGR,R50
+    if self.ctx_id>=0:
+      self.ctx = mx.gpu(self.ctx_id)
+      self.nms = gpu_nms_wrapper(self.nms_threshold, self.ctx_id)
+    else:
+      self.ctx = mx.cpu()
+      self.nms = cpu_nms_wrapper(self.nms_threshold)
+    # self.nms = py_nms_wrapper(self.nms_threshold)
+    # self.pixel_means = np.array([103.939, 116.779, 123.68]) #BGR,VGG16
+    self.pixel_means = np.array([0.0, 0.0, 0.0]) #BGR,R50
 
-    if not test_mode:
+    if not self.test_mode:
       image_size = (640, 640)
       self.model = mx.mod.Module(symbol=sym, context=self.ctx, label_names=None)
       self.model.bind(data_shapes=[('data', (1, 3, image_size[0], image_size[1]))], for_training=False)
